@@ -45,7 +45,7 @@ export default function AddressPicker({
           onChange={(e) => onQueryChange(e.target.value)}
           placeholder="123 Main St, City, ST"
           className={cn(
-            "focus-ring w-full rounded-2xl border border-white/12 bg-black/30 px-4 py-3 text-sm text-white/90 placeholder:text-white/35"
+            "focus-ring w-full rounded-2xl border border-white/12 bg-black/30 px-4 py-3 text-base text-white/90 placeholder:text-white/35"
           )}
         />
       </div>

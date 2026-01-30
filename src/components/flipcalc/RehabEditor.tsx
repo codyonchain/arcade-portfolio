@@ -70,7 +70,7 @@ export default function RehabEditor({
                 next[idx] = { ...it, name: e.target.value };
                 setItems(next);
               }}
-              className="focus-ring rounded-xl border border-white/12 bg-black/20 px-3 py-2 text-sm text-white/85"
+              className="focus-ring rounded-xl border border-white/12 bg-black/25 px-4 py-3 text-base text-white/85"
             />
             <input
               value={String(it.cost)}
@@ -80,8 +80,9 @@ export default function RehabEditor({
                 next[idx] = { ...it, cost: Number.isFinite(numeric) ? numeric : 0 };
                 setItems(next);
               }}
-              className="focus-ring rounded-xl border border-white/12 bg-black/20 px-3 py-2 text-sm text-white/85"
+              className="focus-ring rounded-xl border border-white/12 bg-black/25 px-4 py-3 text-base text-white/85"
               inputMode="numeric"
+              pattern="[0-9]*"
             />
           </div>
         ))}

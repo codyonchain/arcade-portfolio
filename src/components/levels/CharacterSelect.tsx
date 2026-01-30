@@ -14,7 +14,7 @@ export default function CharacterSelect({
   onSelect: (id: string) => void;
 }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 sm:grid-cols-2">
       {classes.map((c) => {
         const active = c.id === selectedId;
         return (
@@ -25,7 +25,8 @@ export default function CharacterSelect({
             whileHover={{ y: -2 }}
             transition={{ type: "spring", stiffness: 360, damping: 24 }}
             className={cn(
-              "plastic glow-border focus-ring text-left p-5",
+              "plastic glow-border focus-ring w-full text-left p-5 sm:p-6 transition-shadow",
+              "min-h-[180px] sm:min-h-[200px]",
               active ? "ring-1 ring-white/25" : "ring-0"
             )}
           >

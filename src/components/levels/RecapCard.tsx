@@ -62,6 +62,11 @@ export default function RecapCard({
         <div className="mt-2 text-white/70">{moment}</div>
       </div>
 
+      <div className="mt-4 rounded-2xl border border-white/10 bg-black/25 p-4 text-xs text-white/70">
+        <div className="font-[var(--font-display)] text-[10px] tracking-[0.3em] text-white/50">SHARE TEXT</div>
+        <pre className="mt-2 whitespace-pre-wrap font-mono text-[11px] leading-5 text-white/80">{shareText}</pre>
+      </div>
+
       <div className="mt-4">
         <NeonButton variant="primary" onClick={handleCopy} className="w-full justify-center text-xs">
           {copied ? "COPIED" : "COPY RECAP"}

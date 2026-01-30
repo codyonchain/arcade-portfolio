@@ -25,7 +25,7 @@ export default function NeonButton({
   style?: React.CSSProperties;
 }) {
   const base =
-    "focus-ring relative inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-3 text-sm font-semibold tracking-[0.25em] transition-all duration-200";
+    "focus-ring relative inline-flex min-h-[44px] items-center justify-center overflow-hidden rounded-full px-5 py-3 text-xs font-semibold uppercase tracking-[0.25em] transition-all duration-200 sm:px-7 sm:text-sm";
 
   const styles =
     variant === "primary"

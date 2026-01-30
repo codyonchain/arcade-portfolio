@@ -7,7 +7,7 @@ import { Quest } from "@/lib/levels/types";
 function StatTag({ value, done }: { value: string; done: boolean }) {
   return (
     <div
-      className={`rounded-full px-3 py-1 text-xs font-semibold ${
+      className={`rounded-full px-3 py-1.5 text-xs font-semibold ${
         done ? "bg-emerald-500/20 text-emerald-200" : "bg-white/10 text-white/80"
       }`}
     >
@@ -28,7 +28,7 @@ function QuestCard({
   onRemove?: () => void;
 }) {
   return (
-    <motion.div layout className="rounded-2xl border border-white/10 bg-black/20 p-5">
+    <motion.div layout className="rounded-2xl border border-white/10 bg-black/20 p-5 sm:p-6">
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className="text-sm font-semibold text-white/90">{quest.title}</div>
@@ -36,11 +36,11 @@ function QuestCard({
         </div>
         <StatTag value={`+${quest.xp} XP`} done={done} />
       </div>
-      <div className="mt-4 flex items-center justify-between gap-3">
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center">
         <NeonButton
           variant={done ? "ghost" : "primary"}
           onClick={!done ? onComplete : undefined}
-          className={`text-xs ${done ? "pointer-events-none opacity-50" : ""}`}
+          className={`text-xs w-full justify-center sm:w-auto ${done ? "pointer-events-none opacity-50" : ""}`}
           aria-disabled={done}
         >
           {done ? "COMPLETED" : "COMPLETE"}
@@ -75,7 +75,7 @@ export default function QuestBoard({
   const renderList = (quests: Quest[], showRemove: boolean) => {
     if (!quests.length) {
       return (
-        <div className="rounded-2xl border border-white/5 bg-black/10 px-4 py-6 text-center text-xs text-white/45">
+        <div className="rounded-2xl border border-white/5 bg-black/10 px-4 py-8 text-center text-sm text-white/60">
           No {showRemove ? "custom" : "core"} quests yet.
         </div>
       );

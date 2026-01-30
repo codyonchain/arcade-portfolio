@@ -59,10 +59,10 @@ export default function ProjectCard({
         if (e.key === " ") onSelect();
       }}
       className={cn(
-        "focus-ring plastic group relative cursor-pointer overflow-hidden transition-all duration-300",
-        variant === "featured" ? "p-8" : "p-5",
+        "focus-ring plastic group relative min-w-0 cursor-pointer overflow-hidden transition-all duration-300",
+        variant === "featured" ? "p-6 sm:p-8" : "p-4 sm:p-5",
         selected ? "shadow-[0_35px_85px_rgba(0,0,0,0.75)]" : "shadow-[0_18px_40px_rgba(0,0,0,0.45)]",
-        variant === "featured" ? "min-h-[380px]" : "min-h-[150px]"
+        variant === "featured" ? "min-h-[360px] sm:min-h-[380px]" : "min-h-[150px]"
       )}
       style={accentStyle}
       whileHover={{ y: -2 }}
@@ -86,10 +86,19 @@ export default function ProjectCard({
         )}
 
         <div>
-          <div className={cn("font-semibold leading-tight tracking-tight", variant === "featured" ? "text-4xl" : "text-xl")}>
+          <div className={cn("font-semibold leading-tight tracking-tight text-white", variant === "featured" ? "text-4xl" : "text-2xl")}>
             {model.title}
           </div>
-          <p className={cn("mt-2 text-white/80", variant === "featured" ? "text-lg" : "text-sm")}>{model.tagline}</p>
+          <p
+            className={cn("mt-2 text-white/80", variant === "featured" ? "text-lg leading-snug" : "text-sm leading-snug")}
+            style={
+              variant === "featured"
+                ? undefined
+                : { display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }
+            }
+          >
+            {model.tagline}
+          </p>
           {variant === "featured" && <p className="mt-3 text-base text-white/70">{model.micro}</p>}
         </div>
 

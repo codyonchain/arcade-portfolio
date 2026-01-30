@@ -47,7 +47,7 @@ export default function FlipCalcPage() {
 
   return (
     <FlipWorldShell>
-      <section className="pt-2">
+      <section className="space-y-4 pt-2">
         <div className="max-w-4xl">
           <div className="font-[var(--font-display)] text-[10px] tracking-[0.22em] text-white/55">WORLD 04 • COIN CASTLE</div>
           <h1 className="crt-text mt-3 text-5xl font-semibold tracking-tight md:text-6xl">Flip Verdict in 30 seconds.</h1>
@@ -56,7 +56,7 @@ export default function FlipCalcPage() {
         <div className="mt-6 h-px w-full bg-white/10" />
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+      <section className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
         <AddressPicker items={MOCK_PROPERTIES} selectedId={selectedId} onSelect={setSelectedId} query={query} onQueryChange={setQuery} />
 
         <div className="plastic p-6">
@@ -104,22 +104,13 @@ export default function FlipCalcPage() {
 
       <StatGrid p={property} />
 
-      <section className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <RehabEditor
-          sqft={property.sqft}
-          yearBuilt={property.yearBuilt}
-          finish={inputs.finish}
-          setFinish={(v: FinishLevel) => setValue("finish", v)}
-          items={inputs.rehabLineItems}
-          setItems={(items) => setValue("rehabLineItems", items)}
-        />
-
+      <section className="space-y-6 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-6 lg:space-y-0">
         <div className="plastic p-6">
           <div className="font-[var(--font-display)] text-[10px] tracking-[0.22em] text-white/55">UNDERWRITE</div>
           <div className="mt-2 text-xl font-semibold tracking-tight crt-text">Financing + holding</div>
           <div className="mt-1 text-sm text-white/70">Tweak assumptions. Watch the verdict update instantly.</div>
 
-          <div className="mt-5 grid gap-3">
+          <div className="mt-5 grid gap-3 md:grid-cols-2">
             <Select label="Financing" value={inputs.financing} onChange={(v) => setValue("financing", v as FinancingType)} options={["Cash", "HardMoney"]} />
             <Field label="Holding Months" value={inputs.holdingMonths} onChange={(n) => setNum("holdingMonths", n)} />
             <Field label="Taxes / Month" value={inputs.taxesMonthly} onChange={(n) => setNum("taxesMonthly", n)} />
@@ -127,12 +118,14 @@ export default function FlipCalcPage() {
             <Field label="Utilities / Month" value={inputs.utilitiesMonthly} onChange={(n) => setNum("utilitiesMonthly", n)} />
 
             {inputs.financing === "HardMoney" && (
-              <div className="mt-2 rounded-2xl border border-white/10 bg-black/20 p-4">
-                <div className="font-[var(--font-display)] text-[10px] tracking-[0.22em] text-white/55">HARD MONEY</div>
-                <div className="mt-3 grid gap-3 md:grid-cols-3">
-                  <FieldPct label="Down Payment" value={inputs.downPaymentPct} onChange={(n) => setValue("downPaymentPct", n)} />
-                  <FieldPct label="Rate (APR)" value={inputs.hardMoneyRateApr} onChange={(n) => setValue("hardMoneyRateApr", n)} />
-                  <FieldPct label="Points" value={inputs.pointsPct} onChange={(n) => setValue("pointsPct", n)} />
+              <div className="md:col-span-2">
+                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div className="font-[var(--font-display)] text-[10px] tracking-[0.22em] text-white/55">HARD MONEY</div>
+                  <div className="mt-3 grid gap-3 md:grid-cols-3">
+                    <FieldPct label="Down Payment" value={inputs.downPaymentPct} onChange={(n) => setValue("downPaymentPct", n)} />
+                    <FieldPct label="Rate (APR)" value={inputs.hardMoneyRateApr} onChange={(n) => setValue("hardMoneyRateApr", n)} />
+                    <FieldPct label="Points" value={inputs.pointsPct} onChange={(n) => setValue("pointsPct", n)} />
+                  </div>
                 </div>
               </div>
             )}
@@ -147,6 +140,15 @@ export default function FlipCalcPage() {
             </div>
           </div>
         </div>
+
+        <RehabEditor
+          sqft={property.sqft}
+          yearBuilt={property.yearBuilt}
+          finish={inputs.finish}
+          setFinish={(v: FinishLevel) => setValue("finish", v)}
+          items={inputs.rehabLineItems}
+          setItems={(items) => setValue("rehabLineItems", items)}
+        />
       </section>
 
       <PacketView open={packetOpen} onClose={() => setPacketOpen(false)} p={property} inputs={inputs} verdict={verdict} />
@@ -158,7 +160,7 @@ function Read({ label, value, emphasize }: { label: string; value: string; empha
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
       <div className="font-[var(--font-display)] text-[10px] tracking-[0.22em] text-white/55">{label.toUpperCase()}</div>
-      <div className={cn("mt-2 text-sm text-white/85", emphasize && "text-base font-semibold")}>{value}</div>
+      <div className={cn("mt-2 text-base text-white/85", emphasize && "text-lg font-semibold")}>{value}</div>
     </div>
   );
 }
@@ -170,8 +172,9 @@ function Field({ label, value, onChange }: { label: string; value: number; onCha
       <input
         value={String(value)}
         onChange={(e) => onChange(Number(e.target.value.replace(/[^0-9]/g, "")) || 0)}
-        className="focus-ring mt-2 w-full rounded-xl border border-white/12 bg-black/20 px-3 py-2 text-sm text-white/90"
+        className="focus-ring mt-3 w-full rounded-xl border border-white/12 bg-black/25 px-4 py-3 text-base text-white/90"
         inputMode="numeric"
+        pattern="[0-9]*"
       />
     </div>
   );
@@ -187,8 +190,9 @@ function FieldPct({ label, value, onChange }: { label: string; value: number; on
           const v = Number(e.target.value.replace(/[^0-9]/g, "")) || 0;
           onChange(v / 100);
         }}
-        className="focus-ring mt-2 w-full rounded-xl border border-white/12 bg-black/20 px-3 py-2 text-sm text-white/90"
+        className="focus-ring mt-3 w-full rounded-xl border border-white/12 bg-black/25 px-4 py-3 text-base text-white/90"
         inputMode="numeric"
+        pattern="[0-9]*"
       />
       <div className="mt-1 text-xs text-white/45">{Math.round(value * 100)}%</div>
     </div>
@@ -202,7 +206,7 @@ function Select({ label, value, onChange, options }: { label: string; value: str
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="focus-ring mt-2 w-full rounded-xl border border-white/12 bg-black/20 px-3 py-2 text-sm text-white/90"
+        className="focus-ring mt-3 w-full rounded-xl border border-white/12 bg-black/25 px-4 py-3 text-base text-white/90"
       >
         {options.map((o) => (
           <option key={o} value={o} className="bg-black text-white">
@@ -216,7 +220,7 @@ function Select({ label, value, onChange, options }: { label: string; value: str
 
 function StatBadge({ label, value, tone }: { label: string; value: string; tone?: string }) {
   return (
-    <div className="rounded-full border border-white/15 bg-black/15 px-4 py-2 text-xs uppercase tracking-[0.3em] text-white/65">
+    <div className="rounded-full border border-white/15 bg-black/15 px-4 py-2.5 text-xs uppercase tracking-[0.3em] text-white/65">
       <span>{label}</span>
       <span className={cn("ml-2 text-white", tone)}>{value}</span>
     </div>

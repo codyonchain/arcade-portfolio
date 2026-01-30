@@ -97,6 +97,7 @@ export default function LevelsPage() {
   const totalQuests = generatedQuests.length + state.customQuests.length;
   const questsCompleted = Object.values(state.completed).filter(Boolean).length;
   const momentLine = recapMoment(state, cls?.name ?? "Runner");
+  const hudStickyTop = "calc(env(safe-area-inset-top) + 82px)";
 
   const completeQuest = (quest: Quest) => {
     if (!cls) return;
@@ -247,12 +248,13 @@ export default function LevelsPage() {
             className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]"
           >
             <div className="space-y-6">
-              <div className="plastic glow-border p-6">
-                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                  <div className="flex items-start gap-4">
-                    <CharacterAvatar classId={cls?.id ?? null} />
-                    <div>
-                      <div className="font-[var(--font-display)] text-[10px] tracking-[0.22em] text-white/55">RUN HUD</div>
+              <div className="sticky z-30 md:static" style={{ top: hudStickyTop }}>
+                <div className="plastic glow-border p-6 backdrop-blur-md md:backdrop-blur-0">
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="flex items-start gap-4">
+                      <CharacterAvatar classId={cls?.id ?? null} />
+                      <div>
+                        <div className="font-[var(--font-display)] text-[10px] tracking-[0.22em] text-white/55">RUN HUD</div>
                       <div className="mt-2 text-xl font-semibold tracking-tight crt-text">{cls?.name ?? "Runner"}</div>
                       <div className="mt-1 text-sm text-white/70">{state.goal}</div>
                     </div>
@@ -284,11 +286,11 @@ export default function LevelsPage() {
                   </div>
                 </div>
 
-                <div className="mt-4 flex gap-2">
-                  <NeonButton variant="ghost" onClick={() => setState((s) => ({ ...s, started: false }))} className="text-xs">
+                <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+                  <NeonButton variant="ghost" onClick={() => setState((s) => ({ ...s, started: false }))} className="w-full justify-center text-xs sm:w-auto">
                     EXIT TO MENU
                   </NeonButton>
-                  <NeonButton variant="ghost" onClick={reset} className="text-xs">
+                  <NeonButton variant="ghost" onClick={reset} className="w-full justify-center text-xs sm:w-auto">
                     RESET
                   </NeonButton>
                 </div>
@@ -298,6 +300,7 @@ export default function LevelsPage() {
                     {perkToast}
                   </div>
                 )}
+                </div>
               </div>
 
               <QuestBoard
@@ -307,8 +310,8 @@ export default function LevelsPage() {
                 onComplete={completeQuest}
                 onRemoveCustom={handleRemoveCustomQuest}
               />
-              <div className="plastic p-5">
-                <div className="flex flex-col gap-3 md:flex-row md:items-end">
+              <div className="plastic p-5 sm:p-6">
+                <div className="flex flex-col gap-4 md:flex-row md:items-end">
                   <div className="flex-1">
                     <label className="text-[10px] uppercase tracking-[0.28em] text-white/45">New quest</label>
                     <input
@@ -321,7 +324,7 @@ export default function LevelsPage() {
                       className="focus-ring mt-2 w-full rounded-2xl border border-white/12 bg-black/30 px-4 py-3 text-sm text-white/90 placeholder:text-white/35"
                     />
                   </div>
-                  <div>
+                  <div className="md:w-48">
                     <label className="text-[10px] uppercase tracking-[0.28em] text-white/45">Type</label>
                     <select
                       value={customType}
@@ -333,22 +336,23 @@ export default function LevelsPage() {
                       <option value="boss">Boss</option>
                     </select>
                   </div>
-                  <NeonButton
-                    variant="primary"
-                    onClick={handleAddCustomQuest}
-                    className={`text-xs md:mb-[2px] ${canAddQuest ? "" : "pointer-events-none opacity-40"}`}
-                    ariaLabel="Add custom quest"
-                    aria-disabled={!canAddQuest}
-                  >
-                    ADD QUEST
-                  </NeonButton>
+                  <div className="md:self-end">
+                    <NeonButton
+                      variant="primary"
+                      onClick={handleAddCustomQuest}
+                      className={`w-full justify-center text-xs md:mb-[2px] md:w-auto ${canAddQuest ? "" : "pointer-events-none opacity-40"}`}
+                      ariaLabel="Add custom quest"
+                      aria-disabled={!canAddQuest}
+                    >
+                      ADD QUEST
+                    </NeonButton>
+                  </div>
                 </div>
                 <div className="mt-3 text-xs text-white/45">Custom quests persist even if you reset the run.</div>
               </div>
             </div>
 
             <div className="space-y-6">
-              <WorldFeed playerClassName={cls?.name ?? "Player"} />
               <RecapCard
                 classId={cls?.id ?? null}
                 classNameLabel={cls?.name ?? "Runner"}
@@ -360,6 +364,7 @@ export default function LevelsPage() {
                 xpEarned={state.xpEarnedThisRun}
                 moment={momentLine}
               />
+              <WorldFeed playerClassName={cls?.name ?? "Player"} />
             </div>
           </motion.section>
         )}
