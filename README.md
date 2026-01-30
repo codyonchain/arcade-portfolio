@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Cody // Arcade_OS
 
-## Getting Started
+**Shipping is the skill. Taste is the multiplier.**  
+A retro-futuristic arcade portfolio where each “world” is a playable product — not a case study.
 
-First, run the development server:
+## What this is
+This repo is a portfolio as an **interactive console UI**. You don’t read about projects — you **play** them.
+
+**Worlds included:**
+- **SpecSharp** (external): Construction intelligence product (opens in new tab)
+- **World: FlipCalc**: Address → Prefill → ARV range → Verdict + Max Offer → Investment Packet
+- **World: The Roadmap**: Search Presence Roadmap (SEO + AEO) → Snap Plan → Underwrite → Briefs → Packet
+- **World: Levels.app**: Choose character → quests → XP → level up → recap card
+
+## Why it exists
+Most portfolios are screenshots and paragraphs. This is an arcade cabinet:
+- One click to “holy shit”
+- Tight UX + clean systems
+- Real interactions, deterministic logic, print-ready packets
+
+## Quick start
+
+### Requirements
+- Node.js 18+ (recommended)
+- npm
+
+### Install
+
+```bash
+npm install
+```
+
+### Run (fixed port)
+
+This project runs on http://localhost:3007 by default.
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Worlds
 
-## Learn More
+### FlipCalc (World 04)
+- A flip underwriting snap verdict + underwrite loop.
+- Prefill from mock property dataset
+- Deterministic rehab presets + line items
+- Financing toggles
+- Print-ready Investment Packet  
+Route: `/flipcalc`
 
-To learn more about Next.js, take a look at the following resources:
+### The Roadmap (World 03)
+- A productized “Search Presence Roadmap” optimized for pipeline leads.
+- Snap Plan (positioning, hooks, pillars, next pieces)
+- Underwrite (cadence, channels, competitors)
+- Brief generator + Packet export  
+Route: `/roadmap`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Levels.app (World 02)
+- A gamified quest loop.
+- Character select
+- Quest board + XP + level ups
+- Custom quests
+- Recap card (shareable)  
+Route: `/levels`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### SpecSharp (World 01)
+- External link (opens new tab).  
+Route: https://specsharp.ai
 
-## Deploy on Vercel
+## Project structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+  app/
+    page.tsx                # Arcade start screen
+    flipcalc/page.tsx       # FlipCalc world
+    roadmap/page.tsx        # Roadmap world
+    levels/page.tsx         # Levels world
+  components/
+    ...shared UI...
+    flipcalc/...
+    roadmap/...
+    levels/...
+  lib/
+    projects.ts             # Arcade machine metadata
+    tryNow.ts               # Dock preview logic
+    flipcalc/...
+    roadmap/...
+    levels/...
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Design principles
+
+- Product-first: the demo is the pitch.
+- Arcade OS: retro cues + modern polish.
+- Deterministic logic: no external APIs required for the portfolio version.
+- Exportable artifacts: packets/recaps feel real.
+
+## How to add a new world
+
+1. Create a route in `src/app/<world>/page.tsx`.
+2. Add world metadata in `src/lib/projects.ts`.
+3. Add dock preview behavior in `src/lib/tryNow.ts`.
+
+## Roadmap
+
+- Replace mock datasets with real integrations (optional)
+- Shareable recap cards as images (canvas export)
+- More “world” personality (micro-animations, sound toggle)
+
+## License
+
+MIT
